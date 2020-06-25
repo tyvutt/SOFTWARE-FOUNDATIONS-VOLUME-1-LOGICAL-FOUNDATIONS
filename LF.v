@@ -29,7 +29,7 @@ Example test_next_weekday:
 Proof. simpl. reflexivity. Qed.
 
 (** Homework Submission Guidelines **)
-I have read it.
+(* I have read it. *)
 
 (* Booleans *)
 Inductive bool : Type :=
@@ -55,13 +55,13 @@ Definition orb (b1:bool) (b2:bool) : bool :=
   end.
 
 Example test_orb1: (orb true false) = true.
-Proof. simpl. reflexivity. Qed.
+Proof. reflexivity. Qed.
 Example test_orb2: (orb false false) = false.
-Proof. simpl. reflexivity. Qed.
+Proof. reflexivity. Qed.
 Example test_orb3: (orb false true) = true.
-Proof. simpl. reflexivity. Qed.
+Proof. reflexivity. Qed.
 Example test_orb4: (orb true true) = true.
-Proof. simpl. reflexivity. Qed.
+Proof. reflexivity. Qed.
 
 Notation "x && y" := (andb x y).
 Notation "x || y" := (orb x y).
