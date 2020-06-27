@@ -134,11 +134,106 @@ Inductive bit : Type :=
 
 Inductive nybble : Type :=
   | bits (b0 b1 b2 b3 : bit).
+Check (bits B1 B0 B1 B0).
+
+Definition all_zero (nb : nybble) : bool :=
+  match nb with
+      (bits B0 B0 B0 B0) => true
+    | (bits _ _ _ _)     => false
+  end.
+Compute (all_zero (bits B1 B0 B1 B0)).
+Compute (all_zero (bits B0 B0 B0 B0)).
 
 (* Modules *)
+Module NatPlayground.
 (* Numbers *)
+Inductive nat : Type :=
+    O
+  | S (n : nat).
+Inductive nat' : Type :=
+    stop
+  | tick (foo : nat').
 
+Definition pred (n : nat) : nat :=
+  match n with
+      O    => O
+    | S n => n
+  end.
+Check (S (S (S (S O)))).
+End NatPlayground.
+Check (S (S (S (S O)))).
+
+Definition minusTwo (n : nat) : nat :=
+  match n with
+      O        => O
+    | S O      => O
+    | S (S n) => n
+  end.
+  Compute (minusTwo 4).
+
+Check S.
+Check pred.
+Check minusTwo.
+
+Fixpoint evenb (n:nat) : bool :=
+  match n with
+    O        => true
+  | S O      => false
+  | S (S n) => evenb n
+  end.
+
+Definition oddb (n:nat) : bool := negb (evenb n).
+
+Example test_oddb1: oddb 1 = true.
+Proof. reflexivity. Qed.
+Example test_oddb2: oddb 4 = false.
+Proof. reflexivity. Qed.
+
+Module NatPlayground2.
+Fixpoint plus (n : nat) (m : nat) : nat :=
+  match n with
+      O    => m
+    | S n => S (plus n m)
+  end.
+
+Compute (plus 3 2).
+(*  plus (S (S (S O))) (S (S O))
+==> S (plus (S (S O)) (S (S O)))
+      by the second clause of the match
+==> S (S (plus (S O) (S (S O))))
+      by the second clause of the match
+==> S (S (S (plus O (S (S O)))))
+      by the second clause of the match
+==> S (S (S (S (S O))))
+      by the first clause of the match
+*)
+Fixpoint mult (n m : nat) : nat :=
+  match n with
+      O    => O
+    | S n => plus m (mult n m)
+  end.
+
+Example test_mult1: (mult 3 3) = 9.
+Proof. simpl. reflexivity. Qed.
+
+Fixpoint minus (n m:nat) : nat :=
+  match n, m with
+    O , _      => O
+  | S _ , O    => n
+  | S n, S m => minus n m
+  end.
+
+End NatPlayground2.
+
+Fixpoint exp (base power : nat) : nat :=
+  match power with
+      O   => S O
+    | S p => mult base (exp base p)
+  end.
+
+Fixpoint 
 (** Proof by Simplification **)
+
 (** Proof by Rewriting **)
 (** Proof by Case Analysis **)
 (* More on Notation (Optional) *)
